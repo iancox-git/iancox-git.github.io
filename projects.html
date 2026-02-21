@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Projects — Your Name</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --bg2: #eaf0f8;
+      --surface: #ffffff;
+      --border: #d0dbe8;
+      --border-light: #e8eef5;
+      --accent: #0057b8;
+      --accent-light: #e8f0fc;
+      --accent2: #00a3e0;
+      --text: #0d1b2a;
+      --muted: #6b7e93;
+      --font-display: 'Outfit', sans-serif;
+      --font-mono: 'Space Mono', monospace;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: var(--font-display); line-height: 1.6; overflow-x: hidden; }
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: linear-gradient(var(--border-light) 1px, transparent 1px), linear-gradient(90deg, var(--border-light) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none; z-index: 0;
+    }
+    * { position: relative; z-index: 1; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.1rem 3rem;
+      background: rgba(244,247,251,0.9); backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-family: var(--font-mono); font-weight: 700; font-size: 1rem; color: var(--accent); text-decoration: none; }
+    .nav-logo span { color: var(--text); }
+    .nav-links { display: flex; gap: 2.2rem; list-style: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.82rem; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+
+    .page-header {
+      padding: 10rem 3rem 5rem;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .page-header-inner { max-width: 1200px; margin: 0 auto; }
+
+    .eyebrow { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
+    .eyebrow-line { width: 36px; height: 2px; background: var(--accent); flex-shrink: 0; }
+    .eyebrow-text { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); }
+
+    .page-title { font-family: var(--font-display); font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 800; letter-spacing: -0.03em; }
+    .page-sub { color: var(--muted); font-size: 0.95rem; margin-top: 1.2rem; max-width: 55ch; line-height: 1.7; }
+
+    main { padding: 5rem 3rem; max-width: 1200px; margin: 0 auto; }
+    .section-title { font-family: var(--font-display); font-size: 1.6rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 2rem; }
+
+    /* FILTER */
+    .filter-tabs { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2.5rem; }
+    .filter-btn {
+      padding: 0.45rem 1.1rem;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      color: var(--muted);
+      font-family: var(--font-display);
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: all 0.2s;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-light);
+    }
+
+    /* PROJECT CARDS */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    }
+    .project-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 8px 32px rgba(0,87,184,0.1);
+      transform: translateY(-4px);
+    }
+
+    .project-img {
+      width: 100%; height: 200px;
+      background: linear-gradient(135deg, var(--bg2), var(--accent-light));
+      display: flex; align-items: center; justify-content: center;
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .project-img-placeholder {
+      color: var(--muted); font-size: 0.72rem; letter-spacing: 0.1em;
+      text-transform: uppercase; text-align: center; padding: 1rem;
+      font-family: var(--font-mono);
+    }
+
+    .project-body { padding: 1.75rem; }
+    .project-category { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent2); margin-bottom: 0.5rem; }
+    .project-title { font-size: 1.08rem; font-weight: 700; margin-bottom: 0.75rem; }
+    .project-desc { color: var(--muted); font-size: 0.83rem; line-height: 1.7; }
+    .tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+    .tag { padding: 0.28rem 0.75rem; border: 1px solid var(--border); font-size: 0.7rem; color: var(--muted); border-radius: 2px; background: var(--bg2); }
+    .project-links { display: flex; gap: 1rem; margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid var(--border-light); }
+    .project-links a { color: var(--accent); font-size: 0.78rem; text-decoration: none; font-weight: 600; }
+    .project-links a:hover { text-decoration: underline; }
+
+    /* TIMELINE */
+    .timeline { position: relative; padding-left: 2rem; }
+    .timeline::before {
+      content: '';
+      position: absolute; left: 0; top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--accent), var(--border));
+    }
+    .timeline-item { position: relative; padding: 0 0 3rem 2rem; }
+    .timeline-item::before {
+      content: '';
+      position: absolute; left: -0.38rem; top: 0.35rem;
+      width: 0.76rem; height: 0.76rem;
+      background: var(--surface);
+      border: 2px solid var(--accent);
+      border-radius: 50%;
+    }
+    .timeline-date { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent2); margin-bottom: 0.4rem; }
+    .timeline-role { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.1rem; }
+    .timeline-company { color: var(--accent); font-size: 0.88rem; font-weight: 600; margin-bottom: 0.75rem; }
+    .timeline-desc { color: var(--muted); font-size: 0.83rem; line-height: 1.75; }
+    .timeline-bullets { margin-top: 0.75rem; display: flex; flex-direction: column; gap: 0.35rem; }
+    .timeline-bullets li { color: var(--muted); font-size: 0.83rem; list-style: none; padding-left: 1.2rem; position: relative; }
+    .timeline-bullets li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: 0.8rem; }
+
+    footer {
+      background: var(--text); color: #fff;
+      padding: 2.5rem 3rem;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
+      position: relative; z-index: 1;
+    }
+    .footer-logo { font-family: var(--font-mono); font-weight: 700; color: var(--accent2); font-size: 1rem; }
+    .footer-text { color: rgba(255,255,255,0.4); font-size: 0.78rem; }
+    .footer-links { display: flex; gap: 1.8rem; }
+    .footer-links a { color: rgba(255,255,255,0.55); text-decoration: none; font-size: 0.82rem; transition: color 0.2s; }
+    .footer-links a:hover { color: #fff; }
+
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.55s, transform 0.55s; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .page-header { padding: 8rem 1.5rem 3rem; }
+      main { padding: 3rem 1.5rem; }
+      .projects-grid { grid-template-columns: 1fr; }
+      footer { padding: 2rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">YN<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html#education">Education</a></li>
+      <li><a href="research.html">Research</a></li>
+      <li><a href="projects.html" class="active">Projects</a></li>
+      <li><a href="hobbies.html">Personal</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <header class="page-header">
+    <div class="page-header-inner">
+      <div class="eyebrow">
+        <div class="eyebrow-line"></div>
+        <span class="eyebrow-text">Projects</span>
+      </div>
+      <h1 class="page-title">Projects &amp; Experience</h1>
+      <p class="page-sub">Engineering projects, coursework builds, personal side projects, and industry experience.</p>
+    </div>
+  </header>
+
+  <main>
+    <!-- PROJECTS -->
+    <section style="margin-bottom:6rem; padding:0;">
+      <div class="eyebrow" style="margin-bottom:0.75rem;">
+        <div class="eyebrow-line"></div>
+        <span class="eyebrow-text">Engineering Projects</span>
+      </div>
+      <h2 class="section-title reveal">Project Portfolio</h2>
+
+      <div class="filter-tabs reveal">
+        <button class="filter-btn active" onclick="filterProjects('all', this)">All</button>
+        <button class="filter-btn" onclick="filterProjects('aero', this)">Aerodynamics</button>
+        <button class="filter-btn" onclick="filterProjects('propulsion', this)">Propulsion</button>
+        <button class="filter-btn" onclick="filterProjects('structures', this)">Structures</button>
+        <button class="filter-btn" onclick="filterProjects('software', this)">Software / GNC</button>
+        <button class="filter-btn" onclick="filterProjects('other', this)">Other</button>
+      </div>
+
+      <div class="projects-grid" id="projects-grid">
+
+        <div class="project-card reveal" data-category="aero">
+          <div class="project-img">
+            <!-- Replace with: <img src="images/project1.jpg" alt="Description" style="width:100%;height:100%;object-fit:cover;"> -->
+            <span class="project-img-placeholder">Add project image</span>
+          </div>
+          <div class="project-body">
+            <div class="project-category">Aerodynamics</div>
+            <div class="project-title">CFD Analysis of [Wing/Body/Nozzle]</div>
+            <p class="project-desc">What did you analyze? What solver, mesh, or conditions? What were the key findings or how did results compare to theory/experiment?</p>
+            <div class="tag-row">
+              <span class="tag">OpenFOAM</span>
+              <span class="tag">ANSYS Fluent</span>
+              <span class="tag">Python</span>
+            </div>
+            <div class="project-links">
+              <a href="#">→ GitHub</a>
+              <a href="#">→ Report</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card reveal" data-category="propulsion">
+          <div class="project-img">
+            <span class="project-img-placeholder">Add project image</span>
+          </div>
+          <div class="project-body">
+            <div class="project-category">Propulsion</div>
+            <div class="project-title">Rocket Engine / Propulsion Project</div>
+            <p class="project-desc">Describe the propulsion project — what type of engine or system, what was the design goal, and what did you learn or achieve?</p>
+            <div class="tag-row">
+              <span class="tag">MATLAB</span>
+              <span class="tag">Thermodynamics</span>
+              <span class="tag">CAD</span>
+            </div>
+            <div class="project-links">
+              <a href="#">→ GitHub</a>
+              <a href="#">→ Write-up</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card reveal" data-category="structures">
+          <div class="project-img">
+            <span class="project-img-placeholder">Add project image</span>
+          </div>
+          <div class="project-body">
+            <div class="project-category">Structures &amp; Materials</div>
+            <div class="project-title">Structural Analysis / FEA Project</div>
+            <p class="project-desc">What structure did you analyze? What loads and boundary conditions? What tool did you use and what did the results show?</p>
+            <div class="tag-row">
+              <span class="tag">ANSYS</span>
+              <span class="tag">FEA</span>
+              <span class="tag">SolidWorks</span>
+            </div>
+            <div class="project-links">
+              <a href="#">→ Report</a>
+              <a href="#">→ Slides</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card reveal" data-category="software">
+          <div class="project-img">
+            <span class="project-img-placeholder">Add project image</span>
+          </div>
+          <div class="project-body">
+            <div class="project-category">Software / GNC</div>
+            <div class="project-title">Guidance, Navigation &amp; Control</div>
+            <p class="project-desc">Describe the GNC or software project. What vehicle or system? What algorithm or method? What was the simulation or hardware result?</p>
+            <div class="tag-row">
+              <span class="tag">Python</span>
+              <span class="tag">Simulink</span>
+              <span class="tag">Control Theory</span>
+            </div>
+            <div class="project-links">
+              <a href="#">→ GitHub</a>
+              <a href="#">→ Demo</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Add more project cards here by duplicating a .project-card block above -->
+
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience" style="padding:0;">
+      <div class="eyebrow" style="margin-bottom:0.75rem;">
+        <div class="eyebrow-line"></div>
+        <span class="eyebrow-text">Industry Experience</span>
+      </div>
+      <h2 class="section-title reveal">Work Experience</h2>
+
+      <div class="timeline">
+        <div class="timeline-item reveal">
+          <div class="timeline-date">Summer 2024</div>
+          <div class="timeline-role">Aerospace Engineering Intern</div>
+          <div class="timeline-company">[Company Name] — [Location]</div>
+          <p class="timeline-desc">Brief overview of the team and your role.</p>
+          <ul class="timeline-bullets">
+            <li>Key achievement or responsibility — quantify it if you can</li>
+            <li>Another contribution or technical learning from this role</li>
+            <li>Tools, systems, or software you worked with</li>
+          </ul>
+        </div>
+
+        <div class="timeline-item reveal">
+          <div class="timeline-date">Summer 2023</div>
+          <div class="timeline-role">Engineering Intern / Co-op</div>
+          <div class="timeline-company">[Company Name] — [Location]</div>
+          <p class="timeline-desc">Brief overview of the team and your role.</p>
+          <ul class="timeline-bullets">
+            <li>Key achievement or responsibility</li>
+            <li>Another contribution or learning</li>
+            <li>Technologies or skills you applied</li>
+          </ul>
+        </div>
+
+        <div class="timeline-item reveal">
+          <div class="timeline-date">2022 – Present</div>
+          <div class="timeline-role">Undergraduate / Graduate Researcher</div>
+          <div class="timeline-company">[University Lab] — [Department]</div>
+          <p class="timeline-desc">Part-time research involvement alongside coursework.</p>
+          <ul class="timeline-bullets">
+            <li>Research contribution or experiment you conducted</li>
+            <li>Lab equipment or analysis tools you learned</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span class="footer-logo">YN.</span>
+    <p class="footer-text">© 2025 Your Name</p>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="research.html">Research</a>
+      <a href="hobbies.html">Personal</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+  </footer>
+
+  <script>
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 70);
+      });
+    }, { threshold: 0.08 });
+    reveals.forEach(el => observer.observe(el));
+
+    function filterProjects(cat, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.project-card').forEach(card => {
+        card.style.display = (cat === 'all' || card.dataset.category === cat) ? '' : 'none';
+      });
+    }
+  </script>
+</body>
+</html>
