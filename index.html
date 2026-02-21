@@ -1,88 +1,200 @@
-<nav>
-    <strong>[YOUR NAME]</strong> | 
-    <a href="#home">Home</a> | 
-    <a href="#experience">Experience</a> | 
-    <a href="#research">Research</a> | 
-    <a href="#skills">Skills</a> | 
-    <a href="#personal">Personal</a> | 
-    <a href="#contact">Contact & Resume</a>
-</nav>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name | Aerospace Engineering</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0f172a;       /* Deep Space Blue */
+            --card-bg: #1e293b;  /* Slate Blue */
+            --text: #f8fafc;     /* Off White */
+            --accent: #38bdf8;   /* Aero Blue */
+            --secondary: #94a3b8;
+        }
 
-<section id="home">
-    <h1>Aerospace Engineer & Researcher</h1>
-    <blockquote>
-        <strong>Mission Statement:</strong> "To bridge the gap between advanced computational design and hands-on manufacturing, specifically focusing on the structural integrity of aerospace composites." 
-        <br><em>(Tip: Edit this to reflect your specific career goal!)</em>
-    </blockquote>
-    <p>Welcome! I am a student/engineer currently involved in [Your Specific Research] with a passion for [Your Hobby/Interest]. This portfolio documents my journey through aerospace coursework, club leadership, and lab-based research.</p>
-</section>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            margin: 0;
+            scroll-behavior: smooth;
+        }
 
-<hr>
+        /* Sleek Nav Bar */
+        nav {
+            position: sticky;
+            top: 0;
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 1rem 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #334155;
+            z-index: 1000;
+        }
 
-<section id="experience">
-    <h2>Experience</h2>
-    <h3>Club Involvement: [e.g., Formula SAE or Rocketry Club]</h3>
-    <p><strong>Role:</strong> Lead Composite Fabricator</p>
-    <ul>
-        <li>Designed and manufactured carbon fiber aerodynamic components.</li>
-        <li>Managed a team of 5 students to meet strict competition deadlines.</li>
-    </ul>
+        nav a {
+            color: var(--text);
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
 
-    <h3>Relevant Coursework</h3>
-    <p>Aerodynamics, Propulsion Systems, Orbital Mechanics, Material Science.</p>
-</section>
+        nav a:hover { color: var(--accent); }
 
-<hr>
+        /* Hero Section */
+        .hero {
+            padding: 100px 10% 60px;
+            text-align: center;
+            background: linear-gradient(to bottom, #1e293b, #0f172a);
+        }
 
-<section id="research">
-    <h2>Research</h2>
-    <h3>Project Name: [Title of your Research]</h3>
-    <p>Currently working under Dr. [Name] in the [Name of Lab]. My research focuses on...</p>
-    <p><em>Key takeaway: [What did you learn or discover?]</em></p>
-</section>
+        .hero h1 { font-size: 3rem; margin-bottom: 10px; font-weight: 800; }
+        .hero p { color: var(--accent); font-size: 1.2rem; letter-spacing: 1px; }
 
-<hr>
+        .container { max-width: 900px; margin: auto; padding: 20px 10%; }
 
-<section id="skills">
-    <h2>Technical & Physical Skills</h2>
-    <div style="display: flex; gap: 20px;">
-        <div style="flex: 1;">
-            <h3>Digital/Software</h3>
-            <ul>
-                <li>CAD: SolidWorks, CATIA</li>
-                <li>Analysis: ANSYS (FEA/CFD)</li>
-                <li>Programming: MATLAB, Python</li>
-            </ul>
+        h2 { border-left: 4px solid var(--accent); padding-left: 15px; margin-top: 50px; }
+
+        /* Project Cards */
+        .card {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            border: 1px solid #334155;
+            transition: transform 0.3s;
+        }
+
+        .card:hover { transform: translateY(-5px); border-color: var(--accent); }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .project-img {
+            width: 100%;
+            border-radius: 8px;
+            margin: 15px 0;
+            background: #334155; /* Placeholder color */
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--bg);
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        footer { text-align: center; padding: 40px; color: var(--secondary); font-size: 0.8rem; }
+
+        @media (max-width: 600px) {
+            .skills-grid { grid-template-columns: 1fr; }
+            nav { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div style="font-weight: 800; font-size: 1.2rem;">[YOUR NAME]</div>
+        <div>
+            <a href="#experience">Experience</a>
+            <a href="#research">Research</a>
+            <a href="#skills">Skills</a>
+            <a href="#personal">Personal</a>
+            <a href="#contact">Contact</a>
         </div>
-        <div style="flex: 1;">
-            <h3>Physical/Shop</h3>
-            <ul>
-                <li>Composite Layups & Infusion</li>
-                <li>Vacuum Bagging</li>
-                <li>Milling & Basic Machining</li>
-            </ul>
+    </nav>
+
+    <header class="hero">
+        <h1>Aerospace Engineer</h1>
+        <p>RESEARCH • COMPOSITES • DESIGN</p>
+        <div style="max-width: 600px; margin: 20px auto; color: var(--secondary);">
+            "Bridging the gap between high-fidelity digital design and hands-on structural fabrication."
         </div>
+    </header>
+
+    <div class="container">
+        
+        <section id="experience">
+            <h2>Experience</h2>
+            <div class="card">
+                <h3>[Club/Org Name, e.g., Rocketry Team]</h3>
+                <p style="color: var(--accent);">Lead Composite Fabricator</p>
+                <ul>
+                    <li>Optimized layup schedules for carbon fiber airframes.</li>
+                    <li>Reduced structural weight by 15% using vacuum infusion techniques.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="research">
+            <h2>Research</h2>
+            <div class="card">
+                <h3>[Academic Project Title]</h3>
+                <p>Detailed analysis of [Topic] using [Software/Method].</p>
+                <p style="font-size: 0.9rem; color: var(--secondary);">Guided by Dr. [Name] | [University Name]</p>
+            </div>
+        </section>
+
+        <section id="skills">
+            <h2>Technical Skills</h2>
+            <div class="skills-grid">
+                <div class="card">
+                    <h4 style="margin-top:0; color:var(--accent);">Digital</h4>
+                    <ul style="padding-left: 20px;">
+                        <li>SolidWorks / CATIA</li>
+                        <li>ANSYS (FEA & CFD)</li>
+                        <li>MATLAB / Python</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4 style="margin-top:0; color:var(--accent);">Physical</h4>
+                    <ul style="padding-left: 20px;">
+                        <li>Composite Layup</li>
+                        <li>Vacuum Bagging</li>
+                        <li>CNC Machining</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="personal">
+            <h2>Personal & Hobbies</h2>
+            <div class="card">
+                <p>When I'm not in the wind tunnel or the machine shop, you can find me [Hobby]. I enjoy the challenge of [Hobby] because it requires the same attention to detail as engineering.</p>
+                </div>
+        </section>
+
+        <section id="contact" style="text-align: center;">
+            <h2>Get In Touch</h2>
+            <p>I am currently seeking opportunities in Aerospace Design and Manufacturing.</p>
+            <a href="mailto:your.email@example.com" class="btn">Email Me</a>
+            <a href="resume.pdf" class="btn" style="background: transparent; border: 1px solid var(--accent); color: var(--accent); margin-left: 10px;">View Resume</a>
+            <div style="margin-top: 30px;">
+                <a href="#" style="color: var(--secondary);">LinkedIn</a> • 
+                <a href="#" style="color: var(--secondary);">GitHub</a>
+            </div>
+        </section>
+
     </div>
-    </section>
 
-<hr>
+    <footer>
+        <p>&copy; 2026 [Your Name] | Designed for Aerospace Engineering</p>
+    </footer>
 
-<section id="personal">
-    <h2>Beyond Engineering</h2>
-    <p>When I'm not in the lab, I'm usually [Insert Hobby, e.g., hiking, working on cars, photography].</p>
-    <p>[Write a short paragraph about what this hobby teaches you about engineering, like "Patience" or "Attention to detail".]</p>
-</section>
-
-<hr>
-
-<section id="contact">
-    <h2>Contact & Resume</h2>
-    <p>📧 Email: <a href="mailto:your.email@example.com">your.email@example.com</a></p>
-    <p>🔗 LinkedIn: <a href="your-link-here">[linkedin.com/in/username](https://linkedin.com/in/username)</a></p>
-    <br>
-    <p><strong>📄 [ <a href="resume.pdf" target="_blank">Download My Full Resume (PDF)</a> ]</strong></p>
-</section>
-
-<footer>
-    <p>© 2026 | Built with GitHub Pages</p>
-</footer>
+</body>
+</html>
